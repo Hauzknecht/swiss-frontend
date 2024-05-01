@@ -33,7 +33,7 @@ const Register = () => {
 
         try {
         await AuthService.signup(username, password).then(
-            (response) => {
+            () => {
             // check for token and user already exists with 200
             //   console.log("Sign up successfully", response);
             navigate("/login");
