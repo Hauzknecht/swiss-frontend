@@ -18,34 +18,32 @@ const Register = () => {
             return;
         }
 
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
-            method: 'POST',
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/userexists/${username}`, {
+            method: 'GET',
             headers: {
                 'Content-type': 'application/json',
             },
-            body: JSON.stringify({ username, password}),
         });
 
-        if(!response.ok) {
+        if(response.ok) {
             setError('User with that name already exists');
             return;
-        }
-
-        try {
-        await AuthService.signup(username, password).then(
-            () => {
-            // check for token and user already exists with 200
-            //   console.log("Sign up successfully", response);
-            navigate("/login");
-            window.location.reload();
-            },
-            (error) => {
-            console.log(error);
+        } else {
+            try {
+            await AuthService.signup(username, password).then(
+                () => {
+                // check for token and user already exists with 200
+                //   console.log("Sign up successfully", response);
+                navigate("/login");
+                },
+                (error) => {
+                console.log(error);
+                }
+            );
+            } catch (err) {
+            console.log(err);
             }
-        );
-        } catch (err) {
-        console.log(err);
-        }
+        }   
     };
 
     return (
