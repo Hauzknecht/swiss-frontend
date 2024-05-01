@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import TournamentService from "../services/tournament.service";
 import MatchResultForm from "./MatchResultForm";
 import Standings from "./Standings";
+import Matches from "./Matches";
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
     const [standings, setStandings] = useState([])
     const [pairings, setPairings] = useState([])
     const [roundUpdated, setRoundUpdated] = useState(false)
+    const [showMatches, setShowMatches] = useState(false)
     const {id} = useParams();
 
     useEffect( () => {
@@ -55,13 +57,18 @@ const TournamentDetail = () => {
         return formattedDay+'. '+formattedMonth+'. '+year;
     }
 
+    const showHideMatches = () => {
+        setShowMatches(!showMatches)
+    }
+
     return (
         <div className="text-center col-lg-8 mx-auto p-4 py-md-5">
             <h1>{tournament.name}</h1>
             <p>Number of rounds: {tournament.number_of_rounds}</p>
             <p>Current round: {tournament.current_round}</p>
-            <p>Created : {formatDate(tournament.created)}</p>  
-            {/*<p>{JSON.stringify(tournament)}</p>*/}
+            <p>Created : {formatDate(tournament.created)}</p>
+            <button onClick={showHideMatches} className="btn btn-primary mb-2">{showMatches ? 'Hide matches' : 'Show matches'}</button>
+            { showMatches && <Matches matches={tournament.matches} />}
             <Standings standings={standings} />
             { (pairings.length !== 0) ? (
                 <MatchResultForm onFormSubmit={handleRoundSubmit} pairings={pairings} />

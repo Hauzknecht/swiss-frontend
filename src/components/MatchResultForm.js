@@ -55,6 +55,9 @@ const MatchResultForm = ({ onFormSubmit, pairings }) => {
                       name={`player${index + 1}_score`}
                       value={result.player1.score}
                       style={{width: "90px"}}
+                      required
+                      min="0"
+                      step="1"
                       onChange={(event) => handleChange(index, "player1", event)}
                     />
                   </td>
@@ -64,6 +67,9 @@ const MatchResultForm = ({ onFormSubmit, pairings }) => {
                       name={`player${index + 2}_score`}
                       value={result.player2.score}
                       style={{width: "90px"}}
+                      required
+                      min="0"
+                      step="1"
                       onChange={(event) => handleChange(index, "player2", event)}
                     />
                   </td>

@@ -62,6 +62,8 @@ const CreateTournament = () => {
             value={number_of_rounds}
             onChange={(e) => setNumRounds(parseInt(e.target.value))}
             required
+            min="0"
+            step="1"
             placeholder="Number of rounds"
             id="floatingRounds"
             />
